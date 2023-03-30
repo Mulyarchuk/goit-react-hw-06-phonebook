@@ -1,40 +1,12 @@
-import {useState, useEffect} from "react";
+import { useSelector } from 'react-redux'
 import  ContactForm  from "./ContactForm/ContactForm";
 import { ContactList } from "./ContactList/ContactList";
 import { Filter } from "./Filter/Filter";
+import { getPhones } from "redux/phoneSlice";
 
 export default function App () {
-
-  const [filter, setFilter] = useState('');
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts')) ?? [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
- const addContact = text =>{
-  if (contacts.some(contact=> contact.name.toLowerCase() === text.name.toLowerCase())){
-    alert (`${text.name} is already in contacts.`);
-    return;
-  }
-  setContacts([text, ...contacts]);
- } ;
-
-const deleteContact = contactId =>{
-  setContacts(contacts.filter(contact => contact.id !== contactId)
-  )
-};
-
-const changeFilter = e => {
-  setFilter(e.currentTarget.value);
-};
-
-const getVisibleContacts = () => {
-  const NormolisedFilter = filter.toLowerCase();
-  return contacts.filter((contact => contact.name.toLowerCase().includes(NormolisedFilter)))
-};
+  const contacts = useSelector(getPhones);
+  
 
   return (
     <div
@@ -48,10 +20,10 @@ const getVisibleContacts = () => {
       }}
     >
       <h1>Phonebook</h1>
-      <ContactForm  addContact={addContact}/>
+      <ContactForm />
       {contacts.length>0 ? <h2>Contacts</h2> : <h2>There are no contacts</h2>}
-      {contacts.length>0 &&  <Filter value = {filter} onChange = {changeFilter}/>}
-      <ContactList getVisibleContacts={getVisibleContacts} deleteContact={deleteContact} />
+      {contacts.length>0 &&  <Filter/>}
+      <ContactList/>
     </div>
   );
     };
