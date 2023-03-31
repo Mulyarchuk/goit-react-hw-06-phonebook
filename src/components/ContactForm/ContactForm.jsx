@@ -7,7 +7,7 @@ export default function ContactForm (){
   const dispatch = useDispatch();
   const phones = useSelector(getPhones);   
       
-    
+  
     
     const handleSubmit = e =>{
         e.preventDefault();
@@ -18,6 +18,7 @@ export default function ContactForm (){
           return alert(`${name} is already in contacts `)
         }
         dispatch(addPhones(name, number));
+        
         form.reset();
       };
 

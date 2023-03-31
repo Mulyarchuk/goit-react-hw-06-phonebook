@@ -6,10 +6,11 @@ import { setStatusFilter } from "redux/filterSlice";
 
 export const Filter = ()=>{
     const dispatch = useDispatch();
+   
 
     const onChange = e => {
         const filter = e.target.value;
-        dispatch(setStatusFilter(filter))
+        dispatch(setStatusFilter(filter));
         };
 
     return (

@@ -8,28 +8,28 @@ const contactsInitialState = [
 ];
 
 const phoneSlice = createSlice({
-    name: `phones`,
+    name: 'phones',
     initialState: contactsInitialState,
-    redusers:{
+    reducers: {
         addPhones:{
-        reduser(state,action) {
-            state.push(action.payload)
+            reducer(state, action){
+                state.push(action.payload);
+            },
+            prepare(name, number){
+                return{
+                    payload:{
+                        name,
+                        number,
+                        id: nanoid()
+                    },
+                };
+            },
         },
-        prepare(name, number){
-            return {
-                payload:{
-                 name,
-                 number,
-                 id: nanoid(),
-                }
-            }
-        }
-    },
-        deletePhones(state,action) {
-            return state.filter(contact => contact.id !== action.payload)
+        deletePhones(state, action){
+            return state.filter(item => item.id !== action.payload)
         }
     }
-});
+})
 
 export const { addPhones, deletePhones } = phoneSlice.actions;
 // Редюсер слайсу
